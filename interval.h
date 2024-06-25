@@ -47,6 +47,14 @@ public:
     double size() const;
 
     /**
+     * Expand an interval by a given amount
+     * 
+     * @param delta The amount of padding to add
+     * @return the expanded interval
+    */
+    Interval expand(double delta) const;
+
+    /**
      * Test whether x is within the range [min, max]
      * 
      * @return true if the interval contains x

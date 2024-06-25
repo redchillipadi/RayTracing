@@ -32,3 +32,8 @@ double Interval::clamp(double x) const {
     if (x >= b) return b;
     return x;
 }
+
+Interval Interval::expand(double delta) const {
+    double padding = delta / 2.0;
+    return Interval(a - padding, b + padding);
+}
