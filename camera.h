@@ -1,8 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "hittable.h"
-#include "hittableList.h"
+#include "Shapes/hittable.h"
+#include "Shapes/hittableList.h"
 #include "colour.h"
 #include <SFML/Graphics.hpp>
 

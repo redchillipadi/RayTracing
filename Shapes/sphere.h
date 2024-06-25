@@ -2,8 +2,8 @@
 #define SPHERE_H
 
 #include "hittable.h"
-#include "point3.h"
-#include "Materials/material.h"
+#include "../point3.h"
+#include "../Materials/material.h"
 
 class Sphere : public Hittable {
 public:

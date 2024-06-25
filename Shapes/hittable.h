@@ -1,10 +1,10 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
-#include "point3.h"
-#include "vector3.h"
-#include "ray.h"
-#include "interval.h"
+#include "../point3.h"
+#include "../vector3.h"
+#include "../ray.h"
+#include "../interval.h"
 #include <memory>
 
 class Material;
