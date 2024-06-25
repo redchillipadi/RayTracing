@@ -7,7 +7,7 @@ bool Lambertian::scatter(const Ray& rayIn, const HitRecord& rec, Colour& attenua
     if (scatterDirection.NearZero())
         scatterDirection = rec.normal;
 
-    scattered = Ray(rec.point, scatterDirection);
+    scattered = Ray(rec.point, scatterDirection, rayIn.time());
     attenuation = albedo;
     return true;
 }

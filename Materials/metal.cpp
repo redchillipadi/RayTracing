@@ -5,7 +5,7 @@ Metal::Metal(const Colour& albedo, double fuzz) : albedo(albedo), fuzz(fuzz < 1.
 bool Metal::scatter(const Ray& rayIn, const HitRecord& rec, Colour& attenuation, Ray& scattered) const {
     Vector3 reflected = reflect(rayIn.direction(), rec.normal);
     reflected = Normalise(reflected) + (fuzz * randomUnitVector());
-    scattered = Ray(rec.point, reflected);
+    scattered = Ray(rec.point, reflected, rayIn.time());
     attenuation = albedo;
     return (Dot(scattered.direction(), rec.normal) > 0);
 }

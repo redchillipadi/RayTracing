@@ -137,7 +137,8 @@ Ray Camera::getRay(int x, int y) const {
     Point3 pixelLocation = pixel00 + ((x + offset.x()) * pixelDeltaU) + ((y + offset.y()) * pixelDeltaV);
     Point3 rayOrigin = (defocusAngle <= 0) ? centre : defocusDiskSample();
     Vector3 direction = pixelLocation - rayOrigin;
-    return Ray(centre, direction);
+    double rayTime = randomDouble();
+    return Ray(centre, direction, rayTime);
 }
 
 Vector3 Camera::sampleSquare() const {

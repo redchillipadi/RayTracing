@@ -42,10 +42,10 @@ int main()
     */
     
     // Final Scene
-    int width = 1200;
-    int height = 675;
+    int width = 400;
+    int height = 225;
 
-    Camera camera(width, height, 500, 50);
+    Camera camera(width, height, 100, 50);
     HittableList world;
 
     camera.setVFOV(20);
@@ -66,7 +66,8 @@ int main()
                 if (chooseMat < 0.8) {
                     Colour albedo = Colour::random() * Colour::random();
                     sphereMaterial = std::make_shared<Lambertian>(albedo);
-                    world.add(std::make_shared<Sphere>(centre, 0.2, sphereMaterial));
+                    Point3 centre2  = centre + Vector3(0, randomDouble(0, 0.5), 0);
+                    world.add(std::make_shared<Sphere>(centre, centre2, 0.2, sphereMaterial));
                 } else if (chooseMat < 0.95) {
                     Colour albedo = Colour::random(0.5, 1);
                     double fuzz = randomDouble(0, 0.5);

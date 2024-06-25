@@ -16,7 +16,7 @@ bool Dielectric::scatter(const Ray& rayIn, const HitRecord& rec, Colour& attenua
         ? reflect(unitDirection, rec.normal)
         : refract(unitDirection, rec.normal, refractiveIndex);
 
-    scattered = Ray(rec.point, direction);
+    scattered = Ray(rec.point, direction, rayIn.time());
     return true;
 }
 

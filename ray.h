@@ -18,8 +18,9 @@ public:
      * 
      * @param origin The point where the ray starts
      * @param direction The direction the ray extends
+     * @param tm The time the ray was cast
     */
-   Ray(Point3 origin, Vector3 direction);
+   Ray(Point3 origin, Vector3 direction, double time);
 
     /**
      * Get the origin point
@@ -44,9 +45,17 @@ public:
   */
   Point3 at(double t) const;
 
+  /**
+   * Get the time the ray was cast
+   * 
+   * @return The time
+  */
+ double time() const;
+
 private:
     Point3 originPoint;
     Vector3 directionVector;
+    double tm;
 };
 
 #endif

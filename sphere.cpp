@@ -1,15 +1,26 @@
 #include "sphere.h"
 #include <math.h>
 
-Sphere::Sphere() : centre{0, 0, 0}, radius(1) {}
+Sphere::Sphere() : initial{0, 0, 0}, radius(1), isMoving(false), velocity{0, 0, 0} {}
 
 Sphere::Sphere(const Point3& centre, double radius, std::shared_ptr<Material> material)
- :  centre(centre),
+ :  initial(centre),
     radius(fmax(0.0, radius)),
-    material(material)
+    material(material),
+    isMoving(false),
+    velocity(0, 0, 0)
+{}
+
+Sphere::Sphere(const Point3& centre1, const Point3& centre2, double radius, std::shared_ptr<Material> material)
+ :  initial(centre1),
+    radius(fmax(0.0, radius)),
+    material(material),
+    isMoving(true),
+    velocity(centre2 - centre1)
 {}
 
 bool Sphere::Hit(const Ray& ray, Interval interval, HitRecord& hitRecord) const {
+    Point3 centre = isMoving ? sphereCentre(ray.time()) : initial;
     Vector3 oc = centre - ray.origin();
     double a = ray.direction().squaredMagnitude();
     double h = Dot(ray.direction(), oc);
@@ -34,8 +45,4 @@ bool Sphere::Hit(const Ray& ray, Interval interval, HitRecord& hitRecord) const 
     hitRecord.setNormal(ray, normal);
 
     return true;
-}
-
-void Sphere::move(const Vector3& displacement) {
-    centre = centre + displacement;
 }
