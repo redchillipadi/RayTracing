@@ -6,7 +6,7 @@ Interval::Interval(double min, double max) : a(min), b(max) {}
 
 Interval::Interval(const Interval& int1, const Interval& int2) {
     a = int1.min() <= int2.min() ? int1.min() : int2.min();
-    b = int1.max() <= int2.max() ? int1.max() : int2.max();
+    b = int1.max() >= int2.max() ? int1.max() : int2.max();
 }
 
 const Interval Interval::empty = Interval(+infinity, -infinity);

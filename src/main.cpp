@@ -75,8 +75,9 @@ int main()
     auto material3 = std::make_shared<Metal>(Colour(0.7, 0.6, 0.5), 0.0);
     world.add(std::make_shared<Sphere>(Point3(4, 1, 0), 1.0, material3));
 
-    world = HittableList(std::make_shared<BoundingVolumeHierarchyNode>(world));
     */
+
+    world = HittableList(std::make_shared<BoundingVolumeHierarchyNode>(world));
 
     sf::RenderWindow window(sf::VideoMode(width, height), "My Window");
     sf::Uint8* pixels = new sf::Uint8[width * height * 4];
