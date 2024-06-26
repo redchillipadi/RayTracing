@@ -17,7 +17,6 @@
 
 int main()
 {
-    /*
     // Test DOF
     int width = 400;
     int height = 225;
@@ -39,9 +38,9 @@ int main()
 
     camera.setVFOV(20);
     camera.setOrientation(Point3(-2,2,1), Point3(0, 0, -1), Vector3(0, 1, 0));
-    camera.setAperture(10.0, 3.4);
-    */
+    camera.setAperture(1.0, 3.4);
     
+    /*
     // Final Scene
     int width = 400;
     int height = 225;
@@ -90,6 +89,7 @@ int main()
 
     auto material3 = std::make_shared<Metal>(Colour(0.7, 0.6, 0.5), 0.0);
     world.add(std::make_shared<Sphere>(Point3(4, 1, 0), 1.0, material3));
+    */
 
     world = HittableList(std::make_shared<BoundingVolumeHierarchyNode>(world));
 
