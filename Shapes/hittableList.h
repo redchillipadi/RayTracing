@@ -45,8 +45,17 @@ public:
     */
     bool Hit(const Ray& ray, Interval interval, HitRecord& hitRecord) const override;
 
+    /**
+     * Return the AABB tightly surrounding the shapes
+     * 
+     * @return The Axis Aligned Bounding Box
+    */
+    AxisAlignedBoundingBox boundingBox() const override; 
+
+
 private:
     std::vector<std::shared_ptr<Hittable>> objects;
+    AxisAlignedBoundingBox bbox;
 
 };
 

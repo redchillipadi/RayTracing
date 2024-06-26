@@ -49,12 +49,21 @@ public:
     */
     bool Hit(const Ray& ray, Interval interval, HitRecord& hitRecord) const override;
 
+    /**
+     * Return the AABB surrounding the shape
+     * 
+     * @return The Axis Aligned Bounding Box
+    */
+    AxisAlignedBoundingBox boundingBox() const override; 
+
+
 private:
     Point3 initial;
     Vector3 velocity;
     bool isMoving;
     double radius;
     std::shared_ptr<Material> material;
+    AxisAlignedBoundingBox bbox;
 
     Point3 sphereCentre(double time) const {
         return initial + time * velocity;

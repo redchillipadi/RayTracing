@@ -1,6 +1,7 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
+#include "axisAlignedBoundingBox.h"
 #include "../point3.h"
 #include "../vector3.h"
 #include "../ray.h"
@@ -40,6 +41,13 @@ public:
      * @return true if the object is hit by the ray
     */
     virtual bool Hit(const Ray& ray, Interval interval, HitRecord& hitRecord) const = 0;
+
+    /**
+     * Return the AABB surrounding the shape
+     * 
+     * @return The Axis Aligned Bounding Box
+    */
+    virtual AxisAlignedBoundingBox boundingBox() const = 0; 
 
 private:
 

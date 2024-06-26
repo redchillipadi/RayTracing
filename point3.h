@@ -48,6 +48,15 @@ public:
     double z() const;
 
     /**
+     * Get value of the given axis by index
+     * 
+     * Return the x axis if the index is invalid
+     * 
+     * @param n The axis to retrieve (x=0, y=1, z=2)
+    */
+   double axis(int n) const;
+
+    /**
      * Get distance of point from origin
     */
    double magnitude() const;

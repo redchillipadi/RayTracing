@@ -18,6 +18,19 @@ double Point3::z() const {
     return data[2];
 }
 
+double Point3::axis(int n) const {
+    switch(n) {
+    case 2:
+        return z();
+
+    case 1:
+        return y();
+
+    default:
+        return x();
+    }
+}
+
 double Point3::magnitude() const {
     return sqrt(data[0] * data[0] + data[1] * data[1] + data[2] * data[2]);
 }

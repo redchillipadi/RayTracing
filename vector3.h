@@ -48,6 +48,15 @@ public:
     double z() const;
 
     /**
+     * Get value of the given axis by index
+     * 
+     * Return the x axis if the index is invalid
+     * 
+     * @param n The axis to retrieve (x=0, y=1, z=2)
+    */
+   double axis(int n) const;
+
+    /**
      * Negate vector
      * 
      * Reverse the sign of all elements in the vector

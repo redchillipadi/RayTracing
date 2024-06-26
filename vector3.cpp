@@ -19,6 +19,20 @@ double Vector3::z() const {
     return data[2];
 }
 
+double Vector3::axis(int n) const {
+    switch(n) {
+    case 2:
+        return z();
+
+    case 1:
+        return y();
+
+    default:
+        return x();
+    }
+}
+
+
 Vector3 Vector3::operator-() const {
     return Vector3(-data[0], -data[1], -data[2]);
 }

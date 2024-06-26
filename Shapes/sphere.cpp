@@ -9,7 +9,10 @@ Sphere::Sphere(const Point3& centre, double radius, std::shared_ptr<Material> ma
     material(material),
     isMoving(false),
     velocity(0, 0, 0)
-{}
+{
+    Vector3 vec(radius, radius, radius);
+    bbox = AxisAlignedBoundingBox(centre - vec, centre + vec);
+}
 
 Sphere::Sphere(const Point3& centre1, const Point3& centre2, double radius, std::shared_ptr<Material> material)
  :  initial(centre1),
@@ -17,7 +20,12 @@ Sphere::Sphere(const Point3& centre1, const Point3& centre2, double radius, std:
     material(material),
     isMoving(true),
     velocity(centre2 - centre1)
-{}
+{
+    Vector3 vec(radius, radius, radius);
+    AxisAlignedBoundingBox box1(centre1 - vec, centre1 + vec);
+    AxisAlignedBoundingBox box2(centre2 - vec, centre2 + vec);
+    bbox = AxisAlignedBoundingBox(box1, box2);
+}
 
 bool Sphere::Hit(const Ray& ray, Interval interval, HitRecord& hitRecord) const {
     Point3 centre = isMoving ? sphereCentre(ray.time()) : initial;
@@ -45,4 +53,8 @@ bool Sphere::Hit(const Ray& ray, Interval interval, HitRecord& hitRecord) const 
     hitRecord.setNormal(ray, normal);
 
     return true;
+}
+
+AxisAlignedBoundingBox Sphere::boundingBox() const {
+    return bbox;
 }

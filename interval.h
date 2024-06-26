@@ -26,6 +26,16 @@ public:
     Interval(double min, double max);
 
     /**
+     * Alternative constructor
+     * 
+     * Create an interval tightly enclosing the two provided intervals
+     * 
+     * @param int1 The first interval
+     * @param int2 The second interval
+    */
+   Interval(const Interval& int1, const Interval& int2);
+
+    /**
      * Get the minimum value
      * 
      * @return The minimum value of the interval
@@ -38,6 +48,20 @@ public:
      * @return The maximum value of the interval
     */
     double max() const;
+
+    /**
+     * Set the minimum value
+     * 
+     * @param min The new minimum value
+    */
+    void setMin(double min);
+
+    /**
+     * Set the maximum value
+     * 
+     * @param max The new maximum value
+    */
+    void setMax(double max);
 
     /**
      * Return the size contained within the interval
