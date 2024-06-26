@@ -27,6 +27,15 @@ public:
     Point3(double x, double y, double z);
 
     /**
+     * Alternate constructor
+     * 
+     * Create point from a vector
+     * 
+     * @param vector The vector to convert
+    */
+   Point3(const Vector3& vector);
+
+    /**
      * Get value of x
      * 
      * @return X distance

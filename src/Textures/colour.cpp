@@ -1,6 +1,6 @@
 #include "colour.h"
-#include "vector3.h"
-#include "random.h"
+#include "../vector3.h"
+#include "../random.h"
 
 Colour::Colour() : data{0.0, 0.0, 0.0} {}
 

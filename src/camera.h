@@ -3,7 +3,7 @@
 
 #include "Shapes/hittable.h"
 #include "Shapes/hittableList.h"
-#include "colour.h"
+#include "Textures/colour.h"
 #include <SFML/Graphics.hpp>
 
 /**

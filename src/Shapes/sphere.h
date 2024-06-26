@@ -68,6 +68,17 @@ private:
     Point3 sphereCentre(double time) const {
         return initial + time * velocity;
     }
+
+    /**
+     * Get the UV coordinates of a sphere
+     * 
+     * Assumes a unit sphere centred at the origin.
+     * 
+     * @param point The point on the sphere
+     * @param u Returns the u texture coordinate
+     * @param v Returns the v texture coordinate
+    */
+    static void getSphereUV(const Point3& point, double& u, double& v);
 };
 
 #endif

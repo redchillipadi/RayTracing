@@ -1,6 +1,7 @@
 #include "camera.h"
 #include "Materials/material.h"
 #include "random.h"
+#include <math.h>
 #include <iostream>
 
 double linearToGamma(double linear)
@@ -10,8 +11,7 @@ double linearToGamma(double linear)
 
 double degreesToRadians(double degrees)
 {
-    static const double pi = 3.1415926535897932385;
-    return degrees * pi / 180.0;
+    return degrees * M_PI / 180.0;
 }
 
 bool setPixel(sf::Uint8* pixels, int width, int height, int x, int y, Colour colour)

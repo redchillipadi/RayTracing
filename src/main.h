@@ -8,6 +8,8 @@
 #include "Materials/metal.h"
 #include "Shapes/boundingVolumeHierarchy.h"
 #include "Shapes/sphere.h"
+#include "Textures/checkerTexture.h"
+#include "Textures/imageTexture.h"
 #include <iostream>
 
 #endif

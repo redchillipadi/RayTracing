@@ -1,5 +1,6 @@
 #include "sphere.h"
 #include <math.h>
+#include <iostream>
 
 Sphere::Sphere() : initial{0, 0, 0}, radius(1), isMoving(false), velocity{0, 0, 0} {}
 
@@ -49,12 +50,21 @@ bool Sphere::Hit(const Ray& ray, Interval interval, HitRecord& hitRecord) const 
     hitRecord.t = root;
     hitRecord.point = ray.at(hitRecord.t);
     Vector3 normal = (hitRecord.point - centre) / radius;
-    hitRecord.material = material;
     hitRecord.setNormal(ray, normal);
+    getSphereUV(Point3(normal), hitRecord.u, hitRecord.v);
+    hitRecord.material = material;
 
     return true;
 }
 
 AxisAlignedBoundingBox Sphere::boundingBox() const {
     return bbox;
+}
+
+void Sphere::getSphereUV(const Point3& point, double& u, double& v) {
+    double theta = acos(-point.y());
+    double phi = atan2(-point.z(), point.x()) + M_PI;
+
+    u = phi / (2.0 * M_PI);
+    v = theta / M_PI;
 }

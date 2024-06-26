@@ -1,8 +1,42 @@
 #include "main.h"
 
-int main()
-{
-    // Test DOF
+void renderScene(int width, int height, Camera& camera, const HittableList& world) {
+    sf::RenderWindow window(sf::VideoMode(width, height), "My Window");
+    sf::Uint8* pixels = new sf::Uint8[width * height * 4];
+    if (pixels == nullptr) {
+        std::cerr << "Unable to allocate pixel buffer" << std::endl;
+        return;
+    }
+
+    sf::Texture texture;
+    if (!texture.create(width, height)) {
+        std::cerr << "Unable to create texture" << std::endl;
+        return;
+    }
+
+    sf::Sprite sprite;
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        camera.render(world, pixels);
+        texture.update(pixels);
+
+        window.clear(sf::Color::Black);
+        sprite.setTexture(texture);
+        window.draw(sprite);
+
+        window.display();
+    }
+}
+
+void sceneDepthOfField() {
     int width = 400;
     int height = 225;
 
@@ -24,9 +58,13 @@ int main()
     camera.setVFOV(20);
     camera.setOrientation(Point3(-2,2,1), Point3(0, 0, -1), Vector3(0, 1, 0));
     camera.setAperture(1.0, 3.4);
-    
-    /*
-    // Final Scene
+
+    world = HittableList(std::make_shared<BoundingVolumeHierarchyNode>(world));
+
+    renderScene(width, height, camera, world);
+}
+
+void sceneBouncingSpheres() {
     int width = 400;
     int height = 225;
 
@@ -35,9 +73,10 @@ int main()
 
     camera.setVFOV(20);
     camera.setOrientation(Point3(13,2,3), Point3(0, 0, 0), Vector3(0, 1, 0));
-    camera.setAperture(0.6, 10.0);
+    camera.setAperture(0, 10.0);
 
-    std::shared_ptr<Lambertian> materialGround = std::make_shared<Lambertian>(Colour(0.5, 0.5, 0.5));
+    std::shared_ptr<CheckerTexture> checker = std::make_shared<CheckerTexture>(0.32, Colour(0.2, 0.3, 0.1), Colour(0.9, 0.9, 0.9));
+    std::shared_ptr<Lambertian> materialGround = std::make_shared<Lambertian>(checker);
     world.add(std::make_shared<Sphere>(Point3(0.0, -1000.0, 0.0), 1000.0, materialGround));
 
     for (int a = -11; a < 11; a++) {
@@ -75,41 +114,60 @@ int main()
     auto material3 = std::make_shared<Metal>(Colour(0.7, 0.6, 0.5), 0.0);
     world.add(std::make_shared<Sphere>(Point3(4, 1, 0), 1.0, material3));
 
-    */
-
     world = HittableList(std::make_shared<BoundingVolumeHierarchyNode>(world));
 
-    sf::RenderWindow window(sf::VideoMode(width, height), "My Window");
-    sf::Uint8* pixels = new sf::Uint8[width * height * 4];
-    if (pixels == nullptr) {
-        std::cerr << "Unable to allocate pixel buffer" << std::endl;
-        return 0;
-    }
+    renderScene(width, height, camera, world);
+}
 
-    sf::Texture texture;
-    if (!texture.create(width, height)) {
-        std::cerr << "Unable to create texture" << std::endl;
-        return 0;
-    }
+void sceneCheckeredSpheres() {
+    int width = 400;
+    int height = 225;
 
-    sf::Sprite sprite;
+    Camera camera(width, height, 100, 50);
+    HittableList world;
 
+    camera.setVFOV(20);
+    camera.setOrientation(Point3(13,2,3), Point3(0, 0, 0), Vector3(0, 1, 0));
+    camera.setAperture(0, 10.0);
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+    std::shared_ptr<CheckerTexture> checker = std::make_shared<CheckerTexture>(0.32, Colour(0.2, 0.3, 0.1), Colour(0.9, 0.9, 0.9));
+    world.add(std::make_shared<Sphere>(Point3(0, -10, 0), 10, std::make_shared<Lambertian>(checker)));
+    world.add(std::make_shared<Sphere>(Point3(0, 10, 0), 10, std::make_shared<Lambertian>(checker)));
 
-        camera.render(world, pixels);
-        texture.update(pixels);
-        sprite.setTexture(texture);
-        window.draw(sprite);
+    renderScene(width, height, camera, world);
+}
 
-        window.display();
+void sceneEarth() {
+    int width = 400;
+    int height = 225;
+
+    Camera camera(width, height, 100, 50);
+    camera.setVFOV(20);
+    camera.setOrientation(Point3(0, 0, 12), Point3(0, 0, 0), Vector3(0, 1, 0));
+    camera.setAperture(0.0, 10.0);
+
+    HittableList world;
+    std::shared_ptr<ImageTexture> earthTexture = std::make_shared<ImageTexture>("earthmap.jpg");
+    std::shared_ptr<Lambertian> earthSurface = std::make_shared<Lambertian>(earthTexture);
+    std::shared_ptr<Sphere> globe = std::make_shared<Sphere>(Point3(0, 0, 0), 2, earthSurface);
+
+    world.add(globe);
+
+    renderScene(width, height, camera, world);
+}
+
+int main()
+{
+    int scene = 3;
+
+    switch(scene) {
+    case 0: sceneDepthOfField(); break;
+    case 1: sceneBouncingSpheres(); break;
+    case 2: sceneCheckeredSpheres(); break;
+    case 3: sceneEarth(); break;
+
+    default:
+        std::cerr << "Invalid scene number: " << scene << std::endl;
     }
 
     return 0;

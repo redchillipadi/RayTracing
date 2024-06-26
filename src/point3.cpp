@@ -6,6 +6,9 @@ Point3::Point3() : data{0.0, 0.0, 0.0} {}
 
 Point3::Point3(double x, double y, double z) : data{x, y, z} {}
 
+Point3::Point3(const Vector3& vector) : Point3(vector.x(), vector.y(), vector.z()) {}
+
+
 double Point3::x() const {
     return data[0];
 }
