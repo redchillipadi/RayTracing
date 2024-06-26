@@ -60,3 +60,10 @@ bool AxisAlignedBoundingBox::hit(const Ray& ray, Interval interval) const {
     return true;
 }
 
+int AxisAlignedBoundingBox::longestAxis() const {
+    return (x.size() > y.size()) ? ((x.size() > z.size()) ? 0 : 2) : ((y.size() > z.size()) ? 1 : 2);
+}
+
+
+const AxisAlignedBoundingBox AxisAlignedBoundingBox::empty = AxisAlignedBoundingBox(Interval::empty, Interval::empty, Interval::empty);
+const AxisAlignedBoundingBox AxisAlignedBoundingBox::universe = AxisAlignedBoundingBox(Interval::universe, Interval::universe, Interval::universe);

@@ -52,6 +52,13 @@ public:
     */
     AxisAlignedBoundingBox boundingBox() const override; 
 
+    /**
+     * Return access to the underlying vector of shared Hittable objects
+     * 
+     * @return The objects vector
+    */
+    std::vector<std::shared_ptr<Hittable>>& objectVector();
+
 
 private:
     std::vector<std::shared_ptr<Hittable>> objects;

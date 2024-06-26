@@ -63,6 +63,23 @@ public:
     */
     bool hit(const Ray& ray, Interval interval) const;
 
+    /**
+     * Return the index of the longest axis in the bounding box
+     * 
+     * @return The index of the longest axis
+    */
+    int longestAxis() const;
+
+    /**
+     * The empty AABB contains empty intervals
+    */
+    static const AxisAlignedBoundingBox empty;
+    
+    /**
+     * The universe AABB contains intervals from -inf to +inf on all axes
+     */
+    static const AxisAlignedBoundingBox universe;
+
 private:
     Interval x, y, z;
 };

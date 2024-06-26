@@ -37,3 +37,7 @@ bool HittableList::Hit(const Ray& ray, Interval interval, HitRecord& hitRecord) 
 AxisAlignedBoundingBox HittableList::boundingBox() const {
     return bbox;
 }
+
+std::vector<std::shared_ptr<Hittable>>& HittableList::objectVector() {
+    return objects;
+}

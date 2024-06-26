@@ -13,3 +13,8 @@ double randomDouble(double min, double max)
 
     return (max - min) * distribution(generator) + min;
 }
+
+int randomInt(int min, int max)
+{
+    return int(randomDouble(min, max+1));
+}
