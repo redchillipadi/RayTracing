@@ -46,3 +46,4 @@
 *.vsix
 
 /main
+build/
