@@ -1,19 +1,4 @@
 #include "main.h"
-#include "camera.h"
-#include "point3.h"
-#include "ray.h"
-#include "vector3.h"
-#include "Shapes/hittable.h"
-#include "Shapes/hittableList.h"
-#include "Shapes/sphere.h"
-#include "Shapes/boundingVolumeHierarchy.h"
-#include "Materials/material.h"
-#include "Materials/lambertian.h"
-#include "Materials/metal.h"
-#include "Materials/dielectric.h"
-#include "random.h"
-#include <iostream>
-#include <memory>
 
 int main()
 {
@@ -89,9 +74,9 @@ int main()
 
     auto material3 = std::make_shared<Metal>(Colour(0.7, 0.6, 0.5), 0.0);
     world.add(std::make_shared<Sphere>(Point3(4, 1, 0), 1.0, material3));
-    */
 
-    //world = HittableList(std::make_shared<BoundingVolumeHierarchyNode>(world));
+    world = HittableList(std::make_shared<BoundingVolumeHierarchyNode>(world));
+    */
 
     sf::RenderWindow window(sf::VideoMode(width, height), "My Window");
     sf::Uint8* pixels = new sf::Uint8[width * height * 4];
