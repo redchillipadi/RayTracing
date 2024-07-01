@@ -60,3 +60,24 @@ bool Quad::isInterior(double alpha, double beta, HitRecord& hitRecord) const
 
     return true;
 }
+
+std::shared_ptr<HittableList> Quad::box(const Point3& a, const Point3& b, std::shared_ptr<Material> material)
+{
+    std::shared_ptr<HittableList> sides = std::make_shared<HittableList>();
+
+    Point3 min{fmin(a.x(), b.x()), fmin(a.y(), b.y()), fmin(a.z(), b.z())};
+    Point3 max{fmax(a.x(), b.x()), fmax(a.y(), b.y()), fmax(a.z(), b.z())};
+
+    Vector3 dx{max.x() - min.x(), 0, 0};
+    Vector3 dy(0, max.y() - min.y(), 0);
+    Vector3 dz(0, 0, max.z() - min.z());
+
+    sides->add(std::make_shared<Quad>(Point3(min.x(), min.y(), max.z()), dx, dy, material)); // Front
+    sides->add(std::make_shared<Quad>(Point3(max.x(), min.y(), max.z()), -dz, dy, material)); // Right
+    sides->add(std::make_shared<Quad>(Point3(max.x(), min.y(), min.z()), -dx, dy, material)); // Back
+    sides->add(std::make_shared<Quad>(Point3(min.x(), min.y(), min.z()), dz, dy, material)); // Left
+    sides->add(std::make_shared<Quad>(Point3(min.x(), max.y(), max.z()), dx, -dz, material)); // Top
+    sides->add(std::make_shared<Quad>(Point3(min.x(), min.y(), min.z()), dx, dz, material)); // Bottom
+
+    return sides;
+}

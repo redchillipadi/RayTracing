@@ -21,6 +21,21 @@ double Point3::z() const {
     return data[2];
 }
 
+void Point3::setX(double value)
+{
+    data[0] = value;
+}
+
+void Point3::setY(double value)
+{
+    data[1] = value;
+}
+
+void Point3::setZ(double value)
+{
+    data[2] = value;
+}
+
 const Point3& Point3::operator*=(double scalar) {
     data[0] *= scalar;
     data[1] *= scalar;
@@ -47,6 +62,14 @@ double Point3::magnitude() const {
     return sqrt(data[0] * data[0] + data[1] * data[1] + data[2] * data[2]);
 }
 
+const Point3& Point3::operator+=(const Vector3& v)
+{
+    data[0] += v.x();
+    data[1] += v.y();
+    data[2] += v.z();
+
+    return *this;
+}
 
 Point3 operator+(const Point3& origin, const Vector3& direction) {
     return Point3(origin.x() + direction.x(), origin.y() + direction.y(), origin.z() + direction.z());

@@ -10,6 +10,8 @@ public:
 
     virtual bool scatter(const Ray& rayIn, const HitRecord& rec, Colour& attenuation, Ray& scattered) const;
 
+    virtual Colour emitted(double u, double v, const Point3& point) const;
+
 private:
 
 };

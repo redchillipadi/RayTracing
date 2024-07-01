@@ -21,6 +21,21 @@ double Vector3::z() const {
     return data[2];
 }
 
+void Vector3::setX(double value)
+{
+    data[0] = value;
+}
+
+void Vector3::setY(double value)
+{
+    data[1] = value;
+}
+
+void Vector3::setZ(double value)
+{
+    data[2] = value;
+}
+
 double Vector3::axis(int n) const {
     switch(n) {
     case 2:

@@ -70,6 +70,13 @@ public:
     */
    void setOrientation(const Point3& lookFrom, const Point3& lookAt, const Vector3& viewUp);
 
+    /**
+     * Set the background colour
+     * 
+     * @param The background colour to use
+    */
+    void setBackground(const Colour& colour);
+
 private:
     double aspectRatio;
     int width;
@@ -87,6 +94,7 @@ private:
     Vector3 viewUp, u, v, w;
     double defocusAngle, focusDistance;
     Vector3 defocusDiskU, defocusDiskV;
+    Colour background;
 
     int currentX, currentY;
 

@@ -1,17 +1,12 @@
 #include "camera.h"
 #include "Materials/material.h"
 #include "random.h"
-#include <math.h>
+#include "convert.h"
 #include <iostream>
 
 double linearToGamma(double linear)
 {
     return (linear > 0.0) ? sqrt(linear) : 0.0;
-}
-
-double degreesToRadians(double degrees)
-{
-    return degrees * M_PI / 180.0;
 }
 
 bool setPixel(sf::Uint8* pixels, int width, int height, int x, int y, Colour colour)
@@ -117,19 +112,20 @@ Colour Camera::rayColour(const Ray& ray, int depth, const Hittable& world) const
     if (depth <=0)
         return Colour(0, 0, 0);
 
-    if (world.Hit(ray, Interval(0.001, infinity), rec)) {
-        Ray scattered;
-        Colour attenuation;
+    if (!world.Hit(ray, Interval(0.001, infinity), rec))
+        return background;
 
-        if (rec.material->scatter(ray, rec, attenuation, scattered))
-            return attenuation * rayColour(scattered, depth-1, world);
-        else
-            return Colour(0, 0, 0);
-    }
+    Ray scattered;
+    Colour attenuation;
+    Colour colourFromEmission = rec.material->emitted(rec.u, rec.v, rec.point);
 
-    Vector3 direction = Normalise(ray.direction());
-    double a = 0.5 * (direction.y() + 1.0);
-    return (1.0 - a) * Colour(1.0, 1.0, 1.0) + a * Colour(0.5, 0.7, 1.0);
+
+    if (!rec.material->scatter(ray, rec, attenuation, scattered))
+        return colourFromEmission;
+
+    Colour colourFromScatter = attenuation * rayColour(scattered, depth-1, world);
+
+    return colourFromEmission + colourFromScatter;
 }
 
 Ray Camera::getRay(int x, int y) const {
@@ -160,3 +156,8 @@ void Camera::setAperture(double angle, double distance)
     focusDistance = distance;
 }
 
+
+void Camera::setBackground(const Colour& colour)
+{
+    background = colour;
+}

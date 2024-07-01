@@ -57,6 +57,27 @@ public:
     double z() const;
 
     /**
+     * Set the value of x
+     * 
+     * @param value The value to set
+    */
+    void setX(double value);
+
+    /**
+     * Set the value of y
+     * 
+     * @param value The value to set
+    */
+    void setY(double value);
+
+    /**
+     * Set the value of z
+     * 
+     * @param value The value to set
+    */
+    void setZ(double value);
+
+    /**
      * Get value of the given axis by index
      * 
      * Return the x axis if the index is invalid

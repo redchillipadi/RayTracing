@@ -114,6 +114,15 @@ private:
     double b;
 };
 
+/** 
+ * Shift the interval by a scalar
+ * 
+ * @param interval The original interval
+ * @param double The amount to translate
+ * @return The shifted interval
+*/
+Interval operator+(const Interval& interval, double d);
+
 /**
  * Approximate infinity with the largest possible double value
 */

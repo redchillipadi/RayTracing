@@ -50,3 +50,8 @@ Interval Interval::expand(double delta) const {
     double padding = delta / 2.0;
     return Interval(a - padding, b + padding);
 }
+
+Interval operator+(const Interval& interval, double d)
+{
+    return Interval(interval.min() + d, interval.max() + d);
+}

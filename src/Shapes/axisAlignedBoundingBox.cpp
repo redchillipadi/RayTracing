@@ -80,3 +80,9 @@ void AxisAlignedBoundingBox::padToMinimums() {
     if (y.size() < delta) y = y.expand(delta);
     if (z.size() < delta) z = z.expand(delta);
 }
+
+
+AxisAlignedBoundingBox operator+(const AxisAlignedBoundingBox& aabb, const Vector3& v)
+{
+    return AxisAlignedBoundingBox(aabb.axisInterval(0) + v.x(), aabb.axisInterval(1) + v.y(), aabb.axisInterval(2) + v.z());
+}

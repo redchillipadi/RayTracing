@@ -2,6 +2,7 @@
 #define QUAD_H
 
 #include "hittable.h"
+#include "hittableList.h"
 
 class Quad : public Hittable {
 public:
@@ -53,6 +54,16 @@ public:
      * @return True if the planar coordinates are within the object
     */
    virtual bool isInterior(double alpha, double beta, HitRecord& hitRecord) const;
+
+    /**
+     * Return a axis aligned box defined by the opposite corners provided
+     * 
+     * @param a The first corner
+     * @param b The opposite corner
+     * @param material The material to use
+     * @return A hittable list containing 6 quads representing the sides of the box
+    */
+    static std::shared_ptr<HittableList> box(const Point3& a, const Point3& b, std::shared_ptr<Material> material);
 
 private:
     Point3 origin_;

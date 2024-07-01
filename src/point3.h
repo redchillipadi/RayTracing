@@ -57,6 +57,27 @@ public:
     double z() const;
 
     /**
+     * Set the value of x
+     * 
+     * @param value The value to set
+    */
+    void setX(double value);
+
+    /**
+     * Set the value of y
+     * 
+     * @param value The value to set
+    */
+    void setY(double value);
+
+    /**
+     * Set the value of z
+     * 
+     * @param value The value to set
+    */
+    void setZ(double value);
+
+    /**
      * Get value of the given axis by index
      * 
      * Return the x axis if the index is invalid
@@ -77,6 +98,14 @@ public:
      * @return The updated point
     */
    const Point3& operator*=(double scalar);
+
+    /**
+     * Translate the point by a vector
+     * 
+     * @param v The distance to translate
+     * @return The translated point
+    */
+    const Point3& operator+=(const Vector3& v);
 
 private:
     double data[3];

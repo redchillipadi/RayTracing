@@ -89,4 +89,6 @@ private:
     void padToMinimums();
 };
 
+AxisAlignedBoundingBox operator+(const AxisAlignedBoundingBox& aabb, const Vector3& v);
+
 #endif

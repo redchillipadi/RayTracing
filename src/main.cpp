@@ -41,6 +41,11 @@ void sceneDepthOfField() {
     int height = 225;
 
     Camera camera(width, height, 100, 50);
+    camera.setVFOV(20);
+    camera.setOrientation(Point3(-2,2,1), Point3(0, 0, -1), Vector3(0, 1, 0));
+    camera.setAperture(1.0, 3.4);
+    camera.setBackground(Colour(0.7, 0.8, 1.0));
+
     HittableList world;
 
     std::shared_ptr<Lambertian> materialGround = std::make_shared<Lambertian>(Colour(0.8, 0.8, 0.0));
@@ -55,9 +60,6 @@ void sceneDepthOfField() {
     world.add(std::make_shared<Sphere>(Point3(-1.0, 0.0, -1.0), 0.4, materialBubble));
     world.add(std::make_shared<Sphere>(Point3(1.0, 0.0, -1.0), 0.5, materialRight));
 
-    camera.setVFOV(20);
-    camera.setOrientation(Point3(-2,2,1), Point3(0, 0, -1), Vector3(0, 1, 0));
-    camera.setAperture(1.0, 3.4);
 
     world = HittableList(std::make_shared<BoundingVolumeHierarchyNode>(world));
 
@@ -74,6 +76,7 @@ void sceneBouncingSpheres() {
     camera.setVFOV(20);
     camera.setOrientation(Point3(13,2,3), Point3(0, 0, 0), Vector3(0, 1, 0));
     camera.setAperture(0, 10.0);
+    camera.setBackground(Colour(0.7, 0.8, 1.0));
 
     std::shared_ptr<CheckerTexture> checker = std::make_shared<CheckerTexture>(0.32, Colour(0.2, 0.3, 0.1), Colour(0.9, 0.9, 0.9));
     std::shared_ptr<Lambertian> materialGround = std::make_shared<Lambertian>(checker);
@@ -129,6 +132,7 @@ void sceneCheckeredSpheres() {
     camera.setVFOV(20);
     camera.setOrientation(Point3(13,2,3), Point3(0, 0, 0), Vector3(0, 1, 0));
     camera.setAperture(0, 10.0);
+    camera.setBackground(Colour(0.7, 0.8, 1.0));
 
     std::shared_ptr<CheckerTexture> checker = std::make_shared<CheckerTexture>(0.32, Colour(0.2, 0.3, 0.1), Colour(0.9, 0.9, 0.9));
     world.add(std::make_shared<Sphere>(Point3(0, -10, 0), 10, std::make_shared<Lambertian>(checker)));
@@ -145,6 +149,7 @@ void sceneEarth() {
     camera.setVFOV(20);
     camera.setOrientation(Point3(0, 0, 12), Point3(0, 0, 0), Vector3(0, 1, 0));
     camera.setAperture(0.0, 10.0);
+    camera.setBackground(Colour(0.7, 0.8, 1.0));
 
     HittableList world;
     std::shared_ptr<ImageTexture> earthTexture = std::make_shared<ImageTexture>("earthmap.jpg");
@@ -164,6 +169,7 @@ void perlinSpheres() {
     camera.setVFOV(20);
     camera.setOrientation(Point3(13, 2, 3), Point3(0, 0, 0), Vector3(0, 1, 0));
     camera.setAperture(0.0, 10.0);
+    camera.setBackground(Colour(0.7, 0.8, 1.0));
 
     HittableList world;
     std::shared_ptr<NoiseTexture> texture = std::make_shared<NoiseTexture>(4);
@@ -181,6 +187,7 @@ void quads() {
     camera.setVFOV(80);
     camera.setOrientation(Point3(0, 0, 9), Point3(0, 0, 0), Vector3(0, 1, 0));
     camera.setAperture(0.0, 10.0);
+    camera.setBackground(Colour(0.7, 0.8, 1.0));
 
     HittableList world;
 
@@ -199,9 +206,71 @@ void quads() {
     renderScene(width, height, camera, world);    
 }
 
+void simpleLights()
+{
+    int width = 400;
+    int height = 225;
+
+    Camera camera(width, height, 100, 50);
+    camera.setVFOV(20);
+    camera.setOrientation(Point3(26, 3, 6), Point3(0, 2, 0), Vector3(0, 1, 0));
+    camera.setAperture(0.0, 10.0);
+    camera.setBackground(Colour(0, 0, 0));
+
+    HittableList world;
+
+    std::shared_ptr<Texture> perlinTexture = std::make_shared<NoiseTexture>(4.0);
+    world.add(std::make_shared<Sphere>(Point3(0, -1000, 0), 1000, std::make_shared<Lambertian>(perlinTexture)));
+    world.add(std::make_shared<Sphere>(Point3(0, 2, 0), 2, std::make_shared<Lambertian>(perlinTexture)));
+
+    std::shared_ptr<Material> diffuseLight = std::make_shared<DiffuseLight>(Colour(4.0, 4.0, 4.0));
+    world.add(std::make_shared<Sphere>(Point3(0, 7, 0), 2, diffuseLight));
+    world.add(std::make_shared<Quad>(Point3(3, 1, -2), Vector3(2, 0, 0), Vector3(0, 2, 0), diffuseLight));
+
+    renderScene(width, height, camera, world);    
+}
+
+void cornellBox()
+{
+    int width = 600;
+    int height = 600;
+
+    Camera camera(width, height, 200, 50);
+    camera.setVFOV(40);
+    camera.setOrientation(Point3(278, 278, -800), Point3(278, 278, 0), Vector3(0, 1, 0));
+    camera.setAperture(0.0, 10.0);
+    camera.setBackground(Colour(0, 0, 0));
+
+    HittableList world;
+
+    std::shared_ptr<Material> red = std::make_shared<Lambertian>(Colour(0.65, 0.05, 0.05));
+    std::shared_ptr<Material> white = std::make_shared<Lambertian>(Colour(0.73, 0.73, 0.73));
+    std::shared_ptr<Material> green = std::make_shared<Lambertian>(Colour(0.12, 0.45, 0.15));
+    std::shared_ptr<Material> light = std::make_shared<DiffuseLight>(Colour(15, 15, 15));
+
+    world.add(std::make_shared<Quad>(Point3(555,0, 0), Vector3(0, 555, 0), Vector3(0, 0, 555), green));
+    world.add(std::make_shared<Quad>(Point3(0,0, 0), Vector3(0, 555, 0), Vector3(0, 0, 555), red));
+    world.add(std::make_shared<Quad>(Point3(343,554, 332), Vector3(-130, 0, 0), Vector3(0, 0, -105), light));
+    world.add(std::make_shared<Quad>(Point3(0, 0, 0), Vector3(555, 0, 0), Vector3(0, 0, 555), white));
+    world.add(std::make_shared<Quad>(Point3(555,555, 555), Vector3(-555, 0, 0), Vector3(0, 0, -555), white));
+    world.add(std::make_shared<Quad>(Point3(0,0, 555), Vector3(555, 0, 0), Vector3(0, 555, 0), white));
+
+    std::shared_ptr<Hittable> box1 = Quad::box(Point3(0, 0, 0), Point3(165, 330, 165), white);
+    box1 = std::make_shared<RotateY>(box1, 15);
+    box1 = std::make_shared<Translate>(box1, Vector3(265, 0, 295));
+    world.add(box1);
+
+    std::shared_ptr<Hittable> box2 = Quad::box(Point3(0, 0, 0), Point3(165, 165, 165), white);
+    box2 = std::make_shared<RotateY>(box2, -10);
+    box2 = std::make_shared<Translate>(box2, Vector3(130, 0, 65));
+    world.add(box2);
+
+    renderScene(width, height, camera, world);
+}
+
 int main()
 {
-    int scene = 5;
+    int scene = 7;
 
     switch(scene) {
     case 0: sceneDepthOfField(); break;
@@ -210,6 +279,8 @@ int main()
     case 3: sceneEarth(); break;
     case 4: perlinSpheres(); break;
     case 5: quads(); break;
+    case 6: simpleLights(); break;
+    case 7: cornellBox(); break;
 
     default:
         std::cerr << "Invalid scene number: " << scene << std::endl;
