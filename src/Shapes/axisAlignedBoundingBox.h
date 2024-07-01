@@ -82,6 +82,11 @@ public:
 
 private:
     Interval x, y, z;
+
+    /**
+     * Pad the AABB so that no side is narrower than delta
+    */
+    void padToMinimums();
 };
 
 #endif

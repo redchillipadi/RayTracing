@@ -6,12 +6,16 @@ AxisAlignedBoundingBox::AxisAlignedBoundingBox(const Interval& x, const Interval
  :  x(x),
     y(y),
     z(z)
-{}
+{
+    padToMinimums();
+}
 
 AxisAlignedBoundingBox::AxisAlignedBoundingBox(const AxisAlignedBoundingBox& aabb1, const AxisAlignedBoundingBox& aabb2) {
     x = Interval(aabb1.x, aabb2.x);
     y = Interval(aabb1.y, aabb2.y);
     z = Interval(aabb1.z, aabb2.z);
+
+    padToMinimums();
 }
 
 
@@ -19,6 +23,8 @@ AxisAlignedBoundingBox::AxisAlignedBoundingBox(const Point3& p1, const Point3& p
     x = (p1.x() <= p2.x()) ? Interval(p1.x(), p2.x()) : Interval(p2.x(), p1.x());
     y = (p1.y() <= p2.y()) ? Interval(p1.y(), p2.y()) : Interval(p2.y(), p1.y());
     z = (p1.z() <= p2.z()) ? Interval(p1.z(), p2.z()) : Interval(p2.z(), p1.z());
+
+    padToMinimums();
 }
 
 const Interval& AxisAlignedBoundingBox::axisInterval(int n) const {
@@ -67,3 +73,10 @@ int AxisAlignedBoundingBox::longestAxis() const {
 
 const AxisAlignedBoundingBox AxisAlignedBoundingBox::empty = AxisAlignedBoundingBox(Interval::empty, Interval::empty, Interval::empty);
 const AxisAlignedBoundingBox AxisAlignedBoundingBox::universe = AxisAlignedBoundingBox(Interval::universe, Interval::universe, Interval::universe);
+
+void AxisAlignedBoundingBox::padToMinimums() {
+    double delta = 0.0001;
+    if (x.size() < delta) x = x.expand(delta);
+    if (y.size() < delta) y = y.expand(delta);
+    if (z.size() < delta) z = z.expand(delta);
+}

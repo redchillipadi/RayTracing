@@ -21,6 +21,15 @@ double Point3::z() const {
     return data[2];
 }
 
+const Point3& Point3::operator*=(double scalar) {
+    data[0] *= scalar;
+    data[1] *= scalar;
+    data[2] *= scalar;
+
+    return *this;
+}
+
+
 double Point3::axis(int n) const {
     switch(n) {
     case 2:
@@ -49,4 +58,8 @@ Point3 operator-(const Point3& origin, const Vector3& direction) {
 
 Vector3 operator-(const Point3& p1, const Point3& p2) {
     return Vector3(p1.x() - p2.x(), p1.y() - p2.y(), p1.z() - p2.z());
+}
+
+Point3 operator*(const Point3& p, double s) {
+    return Point3(p.x() * s, p.y() * s, p.z() * s);
 }

@@ -121,4 +121,14 @@ Colour operator+(const Colour& c1, const Colour& c2);
 */
 Colour operator+(const Vector3& v, const Colour& c);
 
+/**
+ * Scale a colour by a scalar
+ * 
+ * @param c The colour
+ * @param s The value to scale by
+ * 
+ * @return the new colour c * s
+*/
+Colour operator*(const Colour& c, double s);
+
 #endif

@@ -7,6 +7,8 @@ Vector3::Vector3() : data{0.0, 0.0, 0.0} {}
 
 Vector3::Vector3(double x, double y, double z) : data{x, y, z} {}
 
+Vector3::Vector3(const Point3& point) : data{point.x(), point.y(), point.z()} {}
+
 double Vector3::x() const {
     return data[0];
 }

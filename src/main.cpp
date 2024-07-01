@@ -156,15 +156,60 @@ void sceneEarth() {
     renderScene(width, height, camera, world);
 }
 
+void perlinSpheres() {
+    int width = 400;
+    int height = 225;
+
+    Camera camera(width, height, 100, 50);
+    camera.setVFOV(20);
+    camera.setOrientation(Point3(13, 2, 3), Point3(0, 0, 0), Vector3(0, 1, 0));
+    camera.setAperture(0.0, 10.0);
+
+    HittableList world;
+    std::shared_ptr<NoiseTexture> texture = std::make_shared<NoiseTexture>(4);
+    world.add(std::make_shared<Sphere>(Point3(0, -1000, 0), 1000, std::make_shared<Lambertian>(texture)));
+    world.add(std::make_shared<Sphere>(Point3(0, 2, 0), 2, std::make_shared<Lambertian>(texture)));
+
+    renderScene(width, height, camera, world);
+}
+
+void quads() {
+    int width = 400;
+    int height = 400;
+
+    Camera camera(width, height, 100, 50);
+    camera.setVFOV(80);
+    camera.setOrientation(Point3(0, 0, 9), Point3(0, 0, 0), Vector3(0, 1, 0));
+    camera.setAperture(0.0, 10.0);
+
+    HittableList world;
+
+    std::shared_ptr<Material> leftRed = std::make_shared<Lambertian>(Colour(1.0, 0.2, 0.2));
+    std::shared_ptr<Material> backGreen = std::make_shared<Lambertian>(Colour(0.2, 1.0, 0.2));
+    std::shared_ptr<Material> rightBlue = std::make_shared<Lambertian>(Colour(0.2, 0.2, 1.0));
+    std::shared_ptr<Material> upperOrange = std::make_shared<Lambertian>(Colour(1.0, 0.5, 0.0));
+    std::shared_ptr<Material> lowerTeal = std::make_shared<Lambertian>(Colour(0.2, 0.8, 0.8));
+
+    world.add(std::make_shared<Quad>(Point3(-3, -2, 5), Vector3(0, 0, -4), Vector3(0, 4, 0), leftRed));
+    world.add(std::make_shared<Quad>(Point3(-2, -2, 0), Vector3(4, 0, 0), Vector3(0, 4, 0), backGreen));
+    world.add(std::make_shared<Quad>(Point3(3, -2, 1), Vector3(0, 0, 4), Vector3(0, 4, 0), rightBlue));
+    world.add(std::make_shared<Quad>(Point3(-2, 3, 1), Vector3(4, 0, 0), Vector3(0, 0, 4), upperOrange));
+    world.add(std::make_shared<Quad>(Point3(-2, -3, 5), Vector3(4, 0, 0), Vector3(0, 0, -4), lowerTeal));
+
+    renderScene(width, height, camera, world);    
+}
+
 int main()
 {
-    int scene = 3;
+    int scene = 5;
 
     switch(scene) {
     case 0: sceneDepthOfField(); break;
     case 1: sceneBouncingSpheres(); break;
     case 2: sceneCheckeredSpheres(); break;
     case 3: sceneEarth(); break;
+    case 4: perlinSpheres(); break;
+    case 5: quads(); break;
 
     default:
         std::cerr << "Invalid scene number: " << scene << std::endl;

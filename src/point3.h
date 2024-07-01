@@ -70,6 +70,14 @@ public:
     */
    double magnitude() const;
 
+    /**
+     * Multiply the point by a double
+     * 
+     * @param scalar The value to multiply by
+     * @return The updated point
+    */
+   const Point3& operator*=(double scalar);
+
 private:
     double data[3];
 };
@@ -101,5 +109,15 @@ Point3 operator-(const Point3& origin, const Vector3& direction);
  * @return the vector p1 - p2
 */
 Vector3 operator-(const Point3& p1, const Point3& p2);
+
+/**
+ * Scale a point by a scalar
+ * 
+ * @param p The point
+ * @param s The scaling factor
+ * 
+ * @return The scaled point p * s
+*/
+Point3 operator*(const Point3& p, double s);
 
 #endif

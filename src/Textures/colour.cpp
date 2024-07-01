@@ -59,3 +59,7 @@ Colour operator+(const Colour& c1, const Colour& c2) {
 Colour operator+(const Vector3& v, const Colour& c) {
     return Colour(v.x() + c.r(), v.y() + c.g(), v.z() + c.b());
 }
+
+Colour operator*(const Colour& c, double s) {
+    return Colour(c.r() * s, c.g() * s, c.b() * s);
+}
