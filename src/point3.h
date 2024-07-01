@@ -107,6 +107,19 @@ public:
     */
     const Point3& operator+=(const Vector3& v);
 
+    /**
+     * Return a random vector in [0-1, 0-1, 0-1]
+    */
+    static Point3 random();
+
+    /**
+     * Return a random vector in [min-max, min-max, min-max]
+     * 
+     * @param min The minimum value along each axis
+     * @param max The maximum value along each axis
+    */
+    static Point3 random(double min, double max);
+
 private:
     double data[3];
 };

@@ -1,6 +1,7 @@
 #include "point3.h"
 #include "vector3.h"
 #include <math.h>
+#include "random.h"
 
 Point3::Point3() : data{0.0, 0.0, 0.0} {}
 
@@ -35,6 +36,19 @@ void Point3::setZ(double value)
 {
     data[2] = value;
 }
+
+Point3 Point3::random() {
+    return Point3::random(0.0, 1.0);
+}
+
+Point3 Point3::random(double min, double max)
+{
+    return Vector3(
+        (max - min) * randomDouble() + min,
+        (max - min) * randomDouble() + min,
+        (max - min) * randomDouble() + min);
+}
+
 
 const Point3& Point3::operator*=(double scalar) {
     data[0] *= scalar;
